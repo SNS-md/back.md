@@ -5,6 +5,7 @@ const cors = require("cors");
 const { sequelize } = require("./models");
 const app = express();
 const bodyParser = require("body-parser");
+const postsRouter = require("./routes/posts");
 
 app.set("port", process.env.PORT || 8000);
 
@@ -21,6 +22,7 @@ app.use(
   })
 );
 
+app.use("/api/v1/posts", postsRouter);
 app.get("/", (req, res) => {
   res.status(200).send("sns.md");
 });
