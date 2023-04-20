@@ -151,4 +151,23 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// 좋아요
+router.put("/:postsId/like", async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.postsId },
+    });
+
+    if (post) {
+      post.likes++;
+      post.save();
+      res.status(200).json();
+    } else {
+      res.status(403).json("존재하지 않는 게시글입니다.");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
