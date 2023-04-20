@@ -83,7 +83,7 @@ router.get("/:postsId", async (req, res, next) => {
 
       res.status(200).json({
         ... post.dataValues,
-        comments: comments,
+        comments,
       });
     } else {
       res.status(403).json("존재하지 않는 게시글입니다.");
@@ -134,17 +134,10 @@ router.get("/", async (req, res, next) => {
         order: [["date", "DESC"]],
         limit: 1,
       });
-      if (comment.length == 1) {
-        result.push({
-          post: posts[p],
-          comment: comment[0],
-        });
-      } else {
-        result.push({
-          post: posts[p],
-          comment: {},
-        });
-      }
+      result.push({
+        ... posts[p].dataValues,
+        comment: comment[0],
+      });
     }
 
     res.status(200).json(result);
