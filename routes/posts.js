@@ -6,15 +6,17 @@ const { Post, Comment } = require("../models");
 // 이름 생성
 const createNewName = () => {
   const firstWord = [
-    "잘생긴",
-    "이쁜",
-    "기타치는",
+    "예쁜",
+    "매혹적인",
     "멋진",
-    "재미있는",
-    "달려가는",
-    "활기찬",
+    "차가운",
+    "파릇파릇한",
+    "활발한",
+    "밝은",
+    "쓸쓸한",
+    "어두운"
   ];
-  const secondWord = ["쏘미", "코미", "고양이", "여우", "사자", "토끼"];
+  const secondWord = ["강아지","고양이","토끼","병아리","얼룩소","사자","원숭이","돼지","쏘미","코미"];
 
   const adjective = firstWord[Math.floor(Math.random() * firstWord.length)];
   const noun = secondWord[Math.floor(Math.random() * secondWord.length)];
@@ -80,7 +82,7 @@ router.get("/:postsId", async (req, res, next) => {
       });
 
       res.status(200).json({
-        post,
+        ... post.dataValues,
         comments: comments,
       });
     } else {
@@ -169,5 +171,6 @@ router.put("/:postsId/like", async (req, res, next) => {
     next(err);
   }
 });
+
 
 module.exports = router;
