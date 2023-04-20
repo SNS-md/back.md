@@ -65,4 +65,30 @@ router.post("/:postsId/comments", async (req, res, next) => {
   }
 });
 
+// 글 상세 조회
+router.get("/:postsId", async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.postsId },
+    });
+
+    if (post) {
+      const comments = await Comment.findAll({
+        where: {
+          PostId: post.id,
+        },
+      });
+
+      res.status(200).json({
+        post,
+        comments: comments,
+      });
+    } else {
+      res.status(403).json("존재하지 않는 게시글입니다.");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
