@@ -4,12 +4,17 @@ const express = require("express");
 const cors = require("cors");
 const { sequelize } = require("./models");
 const app = express();
+const bodyParser = require("body-parser");
 
 app.set("port", process.env.PORT || 8000);
 
 sequelize.sync({ force: false }).then(() => {
   console.log("database connection success");
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(
   cors({
     origin: "http://localhost:3000",
