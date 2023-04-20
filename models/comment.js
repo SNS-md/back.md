@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       date: {
         type: DataTypes.DATE,
-        defaultValue: moment.tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss"),
+        defaultValue: () => moment.tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss"),
       },
     },
     {
