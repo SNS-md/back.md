@@ -9,7 +9,7 @@ const postsRouter = require("./routes/posts");
 
 app.set("port", process.env.PORT || 8000);
 
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("database connection success");
 });
 
