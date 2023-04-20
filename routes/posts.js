@@ -91,4 +91,64 @@ router.get("/:postsId", async (req, res, next) => {
   }
 });
 
+// 게시글 리스트 조회
+router.get("/", async (req, res, next) => {
+  try {
+    const page = req.query.page;
+    const sortBy = req.query.sortBy;
+
+    let posts;
+    let offset;
+    const result = [];
+
+    if (page == 1) {
+      offset = 0;
+    } else {
+      offset = (page - 1) * 10 - 1;
+    }
+
+    if (sortBy === "id") {
+      posts = await Post.findAll({
+        order: [["date", "DESC"]],
+        limit: 10,
+        offset: offset,
+      });
+    } else if (sortBy === "like") {
+      posts = await Post.findAll({
+        order: [
+          ["likes", "DESC"],
+          ["date", "DESC"],
+        ],
+        limit: 10,
+        offset: offset,
+      });
+    }
+
+    for (const p in posts) {
+      const comment = await Comment.findAll({
+        where: {
+          PostId: posts[p].id,
+        },
+        order: [["date", "DESC"]],
+        limit: 1,
+      });
+      if (comment.length == 1) {
+        result.push({
+          post: posts[p],
+          comment: comment[0],
+        });
+      } else {
+        result.push({
+          post: posts[p],
+          comment: {},
+        });
+      }
+    }
+
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
