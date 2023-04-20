@@ -1,3 +1,4 @@
+const moment = require("moment-timezone");
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define(
     "Comment",
@@ -10,11 +11,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      date: {
+        type: DataTypes.DATE,
+        defaultValue: moment.tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss"),
+      },
     },
     {
       charset: "utf8mb4",
       collate: "utf8mb4_general_ci",
-      timestamps: true,
+      timestamps: false,
     }
   );
   Comment.associate = (db) => {

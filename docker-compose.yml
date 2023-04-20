@@ -12,6 +12,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
       MYSQL_DATABASE: $MYSQLDB_DATABASE
+      TZ: "Asia/Seoul"
     networks:
       - backend
 
