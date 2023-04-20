@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
-const { Post } = require("../models");
+const { Post, Comment } = require("../models");
 
 // 이름 생성
 const createNewName = () => {
@@ -35,6 +35,31 @@ router.post("/", async (req, res, next) => {
     });
 
     res.status(201).json(post);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/:postsId/comments", async (req, res, next) => {
+  try {
+    const { contents } = req.body;
+    const name = createNewName();
+
+    const post = await Post.findOne({
+      where: { id: req.params.postsId },
+    });
+
+    if (post) {
+      const comment = await Comment.create({
+        name,
+        contents,
+        PostId: post.id,
+      });
+
+      res.status(201).json(comment);
+    } else {
+      res.status(403).json("존재하지 않는 게시글입니다.");
+    }
   } catch (err) {
     next(err);
   }
