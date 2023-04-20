@@ -7,6 +7,11 @@ const development = {
   database: env.MYSQL_DATABASE,
   host: env.MYSQL_HOST,
   dialect: "mysql",
+  dialectOptions: {
+    dateStrings: true,
+    typeCast: true,
+    timezone: "+09:00", // 한국 표준시 (KST)
+  },
 };
 
 const production = {
@@ -15,6 +20,11 @@ const production = {
   database: env.MYSQL_DATABASE,
   host: env.MYSQL_HOST,
   dialect: "mysql",
+  dialectOptions: {
+    dateStrings: true,
+    typeCast: true,
+    timezone: "+09:00", // 한국 표준시 (KST)
+  },
 };
 
 const test = {
@@ -23,6 +33,11 @@ const test = {
   database: env.MYSQL_DATABASE_TEST,
   host: env.MYSQL_HOST,
   dialect: "mysql",
+  dialectOptions: {
+    dateStrings: true,
+    typeCast: true,
+    timezone: "+09:00", // 한국 표준시 (KST)
+  },
 };
 
 module.exports = { development, production, test };
