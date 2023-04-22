@@ -14,9 +14,20 @@ const createNewName = () => {
     "활발한",
     "밝은",
     "쓸쓸한",
-    "어두운"
+    "어두운",
   ];
-  const secondWord = ["강아지","고양이","토끼","병아리","얼룩소","사자","원숭이","돼지","쏘미","코미"];
+  const secondWord = [
+    "강아지",
+    "고양이",
+    "토끼",
+    "병아리",
+    "얼룩소",
+    "사자",
+    "원숭이",
+    "돼지",
+    "쏘미",
+    "코미",
+  ];
 
   const adjective = firstWord[Math.floor(Math.random() * firstWord.length)];
   const noun = secondWord[Math.floor(Math.random() * secondWord.length)];
@@ -82,7 +93,7 @@ router.get("/:postsId", async (req, res, next) => {
       });
 
       res.status(200).json({
-        ... post.dataValues,
+        ...post.dataValues,
         comments,
       });
     } else {
@@ -111,7 +122,7 @@ router.get("/", async (req, res, next) => {
 
     if (sortBy === "id") {
       posts = await Post.findAll({
-        order: [["date", "DESC"]],
+        order: [["id", "DESC"]],
         limit: 10,
         offset: offset,
       });
@@ -119,7 +130,7 @@ router.get("/", async (req, res, next) => {
       posts = await Post.findAll({
         order: [
           ["likes", "DESC"],
-          ["date", "DESC"],
+          ["id", "DESC"],
         ],
         limit: 10,
         offset: offset,
@@ -131,11 +142,11 @@ router.get("/", async (req, res, next) => {
         where: {
           PostId: posts[p].id,
         },
-        order: [["date", "DESC"]],
+        order: [["id", "DESC"]],
         limit: 1,
       });
       result.push({
-        ... posts[p].dataValues,
+        ...posts[p].dataValues,
         comment: comment[0],
       });
     }
@@ -164,6 +175,5 @@ router.put("/:postsId/like", async (req, res, next) => {
     next(err);
   }
 });
-
 
 module.exports = router;
