@@ -22,9 +22,10 @@ app.use(
   })
 );
 
+app.use(express.static(__dirname+'/front'));
 app.use("/api/v1/posts", postsRouter);
-app.get("/", (req, res) => {
-  res.status(200).send("sns.md");
+app.get("*", (req, res) => {
+  res.sendFile(__dirname+ '/front/index.html');
 });
 
 app.listen(app.get("port"), () => {
